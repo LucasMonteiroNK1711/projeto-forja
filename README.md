@@ -152,3 +152,14 @@ Depois acesse:
 - `http://SEU_IP_PUBLICO/api/health`
 
 Guia completo em `docs/deploy-publico.md`.
+
+
+## Deploy gratuito (Vercel + Render + TiDB)
+
+Se você quer publicar **sem custo inicial**, use este stack:
+
+- Frontend: Vercel (free)
+- Backend: Render (free)
+- Banco MySQL-compatible: TiDB Cloud Serverless (free)
+
+Passo a passo completo: `docs/deploy-gratuito.md`.
