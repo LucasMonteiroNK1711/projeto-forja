@@ -1,0 +1,159 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: #f4f6fb;
+  background: #0f1220;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+button {
+  background: #272d48;
+  color: white;
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button.active { background: #4a5bcf; }
+
+input {
+  width: 100%;
+  margin-bottom: 12px;
+  border: 1px solid #333a57;
+  background: #1a1f33;
+  color: white;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.login-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.login-card {
+  width: 380px;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+
+.sidebar {
+  border-right: 1px solid #232942;
+  padding: 20px;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.main-content {
+  padding: 24px;
+}
+
+.card {
+  background: #171b2f;
+  border: 1px solid #232942;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.grid.two { grid-template-columns: 1fr 1fr; }
+.kpi-grid { margin-top: 16px; }
+.muted { color: #9ba3ca; }
+.error { color: #ff8f8f; }
+.row { display: flex; gap: 8px; margin-bottom: 16px; }
+.logout { margin-top: 16px; width: 100%; }
+
+.progress {
+  margin-top: 8px;
+  background: #252d46;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 10px;
+}
+
+.progress > div {
+  height: 100%;
+  background: linear-gradient(90deg, #6374e6, #76d0ff);
+}
+
+.bars { display: grid; gap: 8px; }
+.bar-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 50px;
+  gap: 10px;
+  align-items: center;
+}
+
+.mini-bar {
+  background: #252d46;
+  border-radius: 8px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.mini-bar > div {
+  height: 100%;
+  background: #7a8bff;
+}
+
+.unlocked {
+  border-color: #4e8f72;
+  box-shadow: 0 0 0 1px #4e8f72 inset;
+}
+
+@media (max-width: 960px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidebar { border-right: 0; border-bottom: 1px solid #232942; }
+  .grid.two { grid-template-columns: 1fr; }
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 8px;
+}
+
+.heat-cell {
+  background: #2d3d75;
+  border-radius: 8px;
+  padding: 8px;
+  display: grid;
+  gap: 4px;
+}
+
+.radar-list {
+  display: grid;
+  gap: 10px;
+}
+
+.radar-row, .goal-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 50px;
+  gap: 10px;
+  align-items: center;
+}
+
+.goal-row {
+  grid-template-columns: 120px 1fr 1fr 60px;
+}
+
+.clan-card {
+  margin-top: 10px;
+}
