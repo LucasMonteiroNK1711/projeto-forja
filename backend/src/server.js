@@ -8,6 +8,7 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const authRoutes = require('./routes/authRoutes');
 const achievementRoutes = require('./routes/achievementRoutes');
 const historyRoutes = require('./routes/historyRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.use('/dashboard', dashboardRoutes);
 app.use('/auth', authRoutes);
 app.use('/achievements', achievementRoutes);
 app.use('/history', historyRoutes);
+app.use('/analytics', analyticsRoutes);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

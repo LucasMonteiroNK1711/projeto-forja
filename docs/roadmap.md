@@ -16,12 +16,12 @@
 - [x] Tela de conquistas
 - [x] Tela de configurações base
 
-## Fase 3 — Inteligência e análises
+## Fase 3 — Inteligência e análises ✅
 
-- [ ] Heatmap de consistência
-- [ ] Radar de atributos
-- [ ] Insights automáticos (dia/horário de melhor performance)
-- [ ] Meta vs realizado por área da vida
+- [x] Heatmap de consistência
+- [x] Radar de atributos
+- [x] Insights automáticos (dia/horário de melhor performance)
+- [x] Meta vs realizado por área da vida
 
 ## Fase 4 — Diferenciais
 

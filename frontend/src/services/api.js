@@ -27,5 +27,6 @@ export const api = {
   getTasks: (userId, type) => request(`/tasks?userId=${userId}${type ? `&type=${type}` : ''}`),
   completeTask: (taskId) => request(`/tasks/${taskId}/complete`, { method: 'POST' }),
   getHistory: (userId) => request(`/history/${userId}`),
-  getAchievements: (userId) => request(`/achievements?userId=${userId}`)
+  getAchievements: (userId) => request(`/achievements?userId=${userId}`),
+  getAnalytics: (userId) => request(`/analytics/${userId}`)
 };

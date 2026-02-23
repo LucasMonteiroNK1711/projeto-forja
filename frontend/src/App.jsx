@@ -7,6 +7,7 @@ import TasksPage from './pages/TasksPage';
 import HistoryPage from './pages/HistoryPage';
 import AchievementsPage from './pages/AchievementsPage';
 import SettingsPage from './pages/SettingsPage';
+import AnalyticsPage from './pages/AnalyticsPage';
 
 export default function App() {
   const [session, setSession] = useState(() => {
@@ -18,18 +19,21 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [history, setHistory] = useState(null);
   const [achievements, setAchievements] = useState([]);
+  const [analytics, setAnalytics] = useState(null);
 
   async function loadData(userId) {
-    const [dashboardData, taskData, historyData, achievementData] = await Promise.all([
+    const [dashboardData, taskData, historyData, achievementData, analyticsData] = await Promise.all([
       api.getDashboard(userId),
       api.getTasks(userId),
       api.getHistory(userId),
-      api.getAchievements(userId)
+      api.getAchievements(userId),
+      api.getAnalytics(userId)
     ]);
     setDashboard(dashboardData);
     setTasks(taskData);
     setHistory(historyData);
     setAchievements(achievementData);
+    setAnalytics(analyticsData);
   }
 
   useEffect(() => {
@@ -52,6 +56,7 @@ export default function App() {
     setTasks([]);
     setHistory(null);
     setAchievements([]);
+    setAnalytics(null);
     localStorage.removeItem('forja_session');
   }
 
@@ -70,6 +75,7 @@ export default function App() {
     if (page === 'tasks') return <TasksPage tasks={tasks} onComplete={handleCompleteTask} onReload={() => loadData(session.user.id)} />;
     if (page === 'history') return <HistoryPage history={history} />;
     if (page === 'achievements') return <AchievementsPage achievements={achievements} />;
+    if (page === 'analytics') return <AnalyticsPage analytics={analytics} />;
     return <SettingsPage />;
   };
 

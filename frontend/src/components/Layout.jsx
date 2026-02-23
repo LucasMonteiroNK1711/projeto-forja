@@ -5,6 +5,7 @@ const MENU = [
   { key: 'tasks', label: 'Tarefas' },
   { key: 'history', label: 'Histórico' },
   { key: 'achievements', label: 'Conquistas' },
+  { key: 'analytics', label: 'Análises' },
   { key: 'settings', label: 'Configurações' }
 ];
 
