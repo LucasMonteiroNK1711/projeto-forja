@@ -29,3 +29,11 @@
 - [x] Clãs / guildas
 - [x] API com integrações externas (Notion/Google Calendar)
 - [x] Push notifications (agendamento inicial)
+
+
+## Fase 5 — Competitivo avançado ✅
+
+- [x] Motor competitivo com temporadas
+- [x] Badges avançadas
+- [x] Ranking por clã e eventos
+- [x] Worker/API de dispatch de notificações

@@ -37,5 +37,10 @@ export const api = {
   getIntegrations: (userId) => request(`/integrations?userId=${userId}`),
   connectIntegration: (payload) => request('/integrations/connect', { method: 'POST', body: JSON.stringify(payload) }),
   getNotifications: (userId) => request(`/notifications?userId=${userId}`),
-  scheduleNotification: (payload) => request('/notifications/schedule', { method: 'POST', body: JSON.stringify(payload) })
+  scheduleNotification: (payload) => request('/notifications/schedule', { method: 'POST', body: JSON.stringify(payload) }),
+
+  getSeasons: () => request('/competitive/seasons'),
+  getClanRankingBySeason: (seasonId) => request(`/competitive/clan-ranking${seasonId ? `?seasonId=${seasonId}` : ''}`),
+  getBadges: (userId) => request(`/competitive/badges?userId=${userId}`),
+  dispatchNotificationsQueue: (limit = 20) => request('/queue/dispatch-notifications', { method: 'POST', body: JSON.stringify({ limit }) })
 };

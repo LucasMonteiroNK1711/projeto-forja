@@ -12,6 +12,8 @@ const analyticsRoutes = require('./routes/analyticsRoutes');
 const socialRoutes = require('./routes/socialRoutes');
 const integrationRoutes = require('./routes/integrationRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
+const competitiveRoutes = require('./routes/competitiveRoutes');
+const queueRoutes = require('./routes/queueRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,6 +35,8 @@ app.use('/analytics', analyticsRoutes);
 app.use('/social', socialRoutes);
 app.use('/integrations', integrationRoutes);
 app.use('/notifications', notificationRoutes);
+app.use('/competitive', competitiveRoutes);
+app.use('/queue', queueRoutes);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

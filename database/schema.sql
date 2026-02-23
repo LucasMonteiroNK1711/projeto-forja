@@ -119,3 +119,42 @@ CREATE TABLE IF NOT EXISTS notifications (
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_notifications_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS seasons (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(120) NOT NULL,
+  status ENUM('upcoming', 'active', 'finished') NOT NULL DEFAULT 'upcoming',
+  started_at DATETIME NOT NULL,
+  ended_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS clan_points (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  clan_id INT NOT NULL,
+  season_id INT NOT NULL,
+  event_name VARCHAR(120) NOT NULL,
+  points INT NOT NULL DEFAULT 0,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_clan_points_clan FOREIGN KEY (clan_id) REFERENCES clans(id) ON DELETE CASCADE,
+  CONSTRAINT fk_clan_points_season FOREIGN KEY (season_id) REFERENCES seasons(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS badges (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  code VARCHAR(100) NOT NULL UNIQUE,
+  title VARCHAR(140) NOT NULL,
+  description TEXT,
+  rarity ENUM('common', 'rare', 'epic', 'legendary') NOT NULL DEFAULT 'common',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS user_badges (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  badge_id INT NOT NULL,
+  unlocked_at DATETIME NOT NULL,
+  UNIQUE KEY unique_user_badge (user_id, badge_id),
+  CONSTRAINT fk_user_badges_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_user_badges_badge FOREIGN KEY (badge_id) REFERENCES badges(id) ON DELETE CASCADE
+);

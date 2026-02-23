@@ -31,12 +31,19 @@ Base completa em evolução para um sistema tipo RPG da vida com dashboard e aco
 - Insight automático de melhor dia/horário
 - Meta vs realizado por área da vida
 
-### Fase 4 (concluída nesta entrega)
+### Fase 4 (concluída)
 
 - Ranking global de usuários
 - Clãs (listar, criar e entrar)
 - Integrações (Notion e Google Calendar)
 - Notificações push (agendamento inicial)
+
+### Fase 5 (concluída nesta entrega)
+
+- Temporadas competitivas
+- Ranking por clã com pontuação de eventos
+- Badges avançadas por usuário
+- Endpoint de dispatch para fila de notificações
 
 ## Estrutura
 
@@ -118,10 +125,14 @@ App em `http://localhost:5173`.
 - `POST /integrations/connect`
 - `GET /notifications?userId=1`
 - `POST /notifications/schedule`
+- `GET /competitive/seasons`
+- `GET /competitive/clan-ranking?seasonId=1`
+- `GET /competitive/badges?userId=1`
+- `POST /queue/dispatch-notifications`
 
-## Próxima etapa (Fase 5 sugerida)
+## Próxima etapa (Fase 6 sugerida)
 
-- Motor competitivo com temporadas
-- Engine de badges avançadas
-- Ranking por clã e eventos
-- Entrega real de push (worker/queue)
+- OAuth real para integrações (Notion/Google)
+- Worker separado para notificações e retries
+- Regras automáticas de badges e missões sazonais
+- Modo multiplayer em tempo real

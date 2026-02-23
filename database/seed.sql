@@ -75,3 +75,35 @@ FROM DUAL
 WHERE NOT EXISTS (
   SELECT 1 FROM notifications WHERE user_id = 1 AND title = 'Missão de hoje'
 );
+
+INSERT INTO seasons (name, status, started_at, ended_at)
+SELECT 'Temporada 1', 'active', DATE_SUB(NOW(), INTERVAL 7 DAY), NULL
+FROM DUAL
+WHERE NOT EXISTS (
+  SELECT 1 FROM seasons WHERE name = 'Temporada 1'
+);
+
+INSERT INTO clan_points (clan_id, season_id, event_name, points)
+SELECT c.id, s.id, 'Sprint semanal', 120
+FROM clans c
+CROSS JOIN seasons s
+WHERE c.name = 'Forja Alpha'
+  AND s.name = 'Temporada 1'
+  AND NOT EXISTS (
+    SELECT 1 FROM clan_points cp WHERE cp.clan_id = c.id AND cp.season_id = s.id AND cp.event_name = 'Sprint semanal'
+  );
+
+INSERT INTO badges (code, title, description, rarity)
+VALUES
+  ('discipline_21', 'Disciplina 21', 'Concluir tarefas por 21 dias.', 'rare'),
+  ('xp_5k', '5K XP', 'Acumular 5000 de XP.', 'epic'),
+  ('clan_contributor', 'Contribuidor de Clã', 'Contribuir com pontos em eventos de clã.', 'common')
+ON DUPLICATE KEY UPDATE title = VALUES(title);
+
+INSERT INTO user_badges (user_id, badge_id, unlocked_at)
+SELECT 1, b.id, NOW()
+FROM badges b
+WHERE b.code = 'clan_contributor'
+  AND NOT EXISTS (
+    SELECT 1 FROM user_badges ub WHERE ub.user_id = 1 AND ub.badge_id = b.id
+  );

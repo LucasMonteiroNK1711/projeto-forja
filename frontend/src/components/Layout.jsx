@@ -9,6 +9,7 @@ const MENU = [
   { key: 'social', label: 'Social' },
   { key: 'integrations', label: 'Integrações' },
   { key: 'notifications', label: 'Notificações' },
+  { key: 'competitive', label: 'Competitivo' },
   { key: 'settings', label: 'Configurações' }
 ];
 

@@ -11,6 +11,7 @@ import AnalyticsPage from './pages/AnalyticsPage';
 import SocialPage from './pages/SocialPage';
 import IntegrationsPage from './pages/IntegrationsPage';
 import NotificationsPage from './pages/NotificationsPage';
+import CompetitivePage from './pages/CompetitivePage';
 
 export default function App() {
   const [session, setSession] = useState(() => {
@@ -28,6 +29,9 @@ export default function App() {
   const [integrations, setIntegrations] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [appError, setAppError] = useState('');
+  const [seasons, setSeasons] = useState([]);
+  const [clanRanking, setClanRanking] = useState([]);
+  const [badges, setBadges] = useState([]);
 
   async function loadData(userId) {
     const results = await Promise.allSettled([
@@ -39,7 +43,10 @@ export default function App() {
       api.getRanking(10),
       api.getClans(),
       api.getIntegrations(userId),
-      api.getNotifications(userId)
+      api.getNotifications(userId),
+      api.getSeasons(),
+      api.getClanRankingBySeason(),
+      api.getBadges(userId)
     ]);
 
     const getValue = (idx, fallback) => (results[idx].status === 'fulfilled' ? results[idx].value : fallback);
@@ -53,6 +60,9 @@ export default function App() {
     setClans(getValue(6, { clans: [] }).clans || []);
     setIntegrations(getValue(7, { integrations: [] }).integrations || []);
     setNotifications(getValue(8, { notifications: [] }).notifications || []);
+    setSeasons(getValue(9, { seasons: [] }).seasons || []);
+    setClanRanking(getValue(10, { ranking: [] }).ranking || []);
+    setBadges(getValue(11, { badges: [] }).badges || []);
 
     const failedCount = results.filter((item) => item.status === 'rejected').length;
     if (failedCount > 0) {
@@ -89,6 +99,9 @@ export default function App() {
     setIntegrations([]);
     setNotifications([]);
     setAppError('');
+    setSeasons([]);
+    setClanRanking([]);
+    setBadges([]);
     localStorage.removeItem('forja_session');
   }
 
@@ -118,6 +131,13 @@ export default function App() {
     await loadData(session.user.id);
   }
 
+
+  async function handleDispatchQueue() {
+    const result = await api.dispatchNotificationsQueue(20);
+    await loadData(session.user.id);
+    return result;
+  }
+
   if (!session) {
     return <LoginPage onLogin={handleLogin} />;
   }
@@ -131,6 +151,7 @@ export default function App() {
     if (page === 'social') return <SocialPage ranking={ranking} clans={clans} onCreateClan={handleCreateClan} onJoinClan={handleJoinClan} userId={session.user.id} />;
     if (page === 'integrations') return <IntegrationsPage integrations={integrations} onConnect={handleConnectIntegration} userId={session.user.id} />;
     if (page === 'notifications') return <NotificationsPage notifications={notifications} onSchedule={handleScheduleNotification} userId={session.user.id} />;
+    if (page === 'competitive') return <CompetitivePage seasons={seasons} clanRanking={clanRanking} badges={badges} onDispatchQueue={handleDispatchQueue} />;
     return <SettingsPage />;
   };
 
