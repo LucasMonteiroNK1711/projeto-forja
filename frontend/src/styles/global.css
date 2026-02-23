@@ -153,3 +153,7 @@ input {
 .goal-row {
   grid-template-columns: 120px 1fr 1fr 60px;
 }
+
+.clan-card {
+  margin-top: 10px;
+}

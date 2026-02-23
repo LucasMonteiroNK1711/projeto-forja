@@ -24,12 +24,19 @@ Base completa em evolução para um sistema tipo RPG da vida com dashboard e aco
 - Página de conquistas
 - Página de configurações (placeholder funcional)
 
-### Fase 3 (concluída nesta entrega)
+### Fase 3 (concluída)
 
 - Heatmap de consistência (últimos 90 dias)
 - Radar simplificado de atributos
 - Insight automático de melhor dia/horário
 - Meta vs realizado por área da vida
+
+### Fase 4 (concluída nesta entrega)
+
+- Ranking global de usuários
+- Clãs (listar, criar e entrar)
+- Integrações (Notion e Google Calendar)
+- Notificações push (agendamento inicial)
 
 ## Estrutura
 
@@ -103,10 +110,18 @@ App em `http://localhost:5173`.
 - `GET /history/:userId`
 - `GET /achievements?userId=1`
 - `GET /analytics/:userId`
+- `GET /social/ranking?limit=10`
+- `GET /social/clans`
+- `POST /social/clans`
+- `POST /social/clans/:clanId/join`
+- `GET /integrations?userId=1`
+- `POST /integrations/connect`
+- `GET /notifications?userId=1`
+- `POST /notifications/schedule`
 
-## Próxima etapa (Fase 4)
+## Próxima etapa (Fase 5 sugerida)
 
-- Sistema social (ranking entre amigos)
-- Clãs / guildas
-- Integrações externas (Notion/Calendar)
-- Push notifications
+- Motor competitivo com temporadas
+- Engine de badges avançadas
+- Ranking por clã e eventos
+- Entrega real de push (worker/queue)

@@ -8,6 +8,9 @@ import HistoryPage from './pages/HistoryPage';
 import AchievementsPage from './pages/AchievementsPage';
 import SettingsPage from './pages/SettingsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import SocialPage from './pages/SocialPage';
+import IntegrationsPage from './pages/IntegrationsPage';
+import NotificationsPage from './pages/NotificationsPage';
 
 export default function App() {
   const [session, setSession] = useState(() => {
@@ -20,20 +23,32 @@ export default function App() {
   const [history, setHistory] = useState(null);
   const [achievements, setAchievements] = useState([]);
   const [analytics, setAnalytics] = useState(null);
+  const [ranking, setRanking] = useState([]);
+  const [clans, setClans] = useState([]);
+  const [integrations, setIntegrations] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
   async function loadData(userId) {
-    const [dashboardData, taskData, historyData, achievementData, analyticsData] = await Promise.all([
+    const [dashboardData, taskData, historyData, achievementData, analyticsData, rankingData, clansData, integrationsData, notificationsData] = await Promise.all([
       api.getDashboard(userId),
       api.getTasks(userId),
       api.getHistory(userId),
       api.getAchievements(userId),
-      api.getAnalytics(userId)
+      api.getAnalytics(userId),
+      api.getRanking(10),
+      api.getClans(),
+      api.getIntegrations(userId),
+      api.getNotifications(userId)
     ]);
     setDashboard(dashboardData);
     setTasks(taskData);
     setHistory(historyData);
     setAchievements(achievementData);
     setAnalytics(analyticsData);
+    setRanking(rankingData.ranking || []);
+    setClans(clansData.clans || []);
+    setIntegrations(integrationsData.integrations || []);
+    setNotifications(notificationsData.notifications || []);
   }
 
   useEffect(() => {
@@ -57,12 +72,36 @@ export default function App() {
     setHistory(null);
     setAchievements([]);
     setAnalytics(null);
+    setRanking([]);
+    setClans([]);
+    setIntegrations([]);
+    setNotifications([]);
     localStorage.removeItem('forja_session');
   }
 
   async function handleCompleteTask(taskId) {
     if (!session?.user?.id) return;
     await api.completeTask(taskId);
+    await loadData(session.user.id);
+  }
+
+  async function handleCreateClan(payload) {
+    await api.createClan(payload);
+    await loadData(session.user.id);
+  }
+
+  async function handleJoinClan(clanId, userId) {
+    await api.joinClan(clanId, userId);
+    await loadData(session.user.id);
+  }
+
+  async function handleConnectIntegration(payload) {
+    await api.connectIntegration(payload);
+    await loadData(session.user.id);
+  }
+
+  async function handleScheduleNotification(payload) {
+    await api.scheduleNotification(payload);
     await loadData(session.user.id);
   }
 
@@ -76,6 +115,9 @@ export default function App() {
     if (page === 'history') return <HistoryPage history={history} />;
     if (page === 'achievements') return <AchievementsPage achievements={achievements} />;
     if (page === 'analytics') return <AnalyticsPage analytics={analytics} />;
+    if (page === 'social') return <SocialPage ranking={ranking} clans={clans} onCreateClan={handleCreateClan} onJoinClan={handleJoinClan} userId={session.user.id} />;
+    if (page === 'integrations') return <IntegrationsPage integrations={integrations} onConnect={handleConnectIntegration} userId={session.user.id} />;
+    if (page === 'notifications') return <NotificationsPage notifications={notifications} onSchedule={handleScheduleNotification} userId={session.user.id} />;
     return <SettingsPage />;
   };
 

@@ -28,5 +28,14 @@ export const api = {
   completeTask: (taskId) => request(`/tasks/${taskId}/complete`, { method: 'POST' }),
   getHistory: (userId) => request(`/history/${userId}`),
   getAchievements: (userId) => request(`/achievements?userId=${userId}`),
-  getAnalytics: (userId) => request(`/analytics/${userId}`)
+  getAnalytics: (userId) => request(`/analytics/${userId}`),
+
+  getRanking: (limit = 10) => request(`/social/ranking?limit=${limit}`),
+  getClans: () => request('/social/clans'),
+  createClan: (payload) => request('/social/clans', { method: 'POST', body: JSON.stringify(payload) }),
+  joinClan: (clanId, userId) => request(`/social/clans/${clanId}/join`, { method: 'POST', body: JSON.stringify({ userId }) }),
+  getIntegrations: (userId) => request(`/integrations?userId=${userId}`),
+  connectIntegration: (payload) => request('/integrations/connect', { method: 'POST', body: JSON.stringify(payload) }),
+  getNotifications: (userId) => request(`/notifications?userId=${userId}`),
+  scheduleNotification: (payload) => request('/notifications/schedule', { method: 'POST', body: JSON.stringify(payload) })
 };

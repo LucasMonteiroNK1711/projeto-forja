@@ -6,6 +6,9 @@ const MENU = [
   { key: 'history', label: 'Histórico' },
   { key: 'achievements', label: 'Conquistas' },
   { key: 'analytics', label: 'Análises' },
+  { key: 'social', label: 'Social' },
+  { key: 'integrations', label: 'Integrações' },
+  { key: 'notifications', label: 'Notificações' },
   { key: 'settings', label: 'Configurações' }
 ];
 

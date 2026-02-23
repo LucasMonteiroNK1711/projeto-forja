@@ -9,6 +9,9 @@ const authRoutes = require('./routes/authRoutes');
 const achievementRoutes = require('./routes/achievementRoutes');
 const historyRoutes = require('./routes/historyRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
+const socialRoutes = require('./routes/socialRoutes');
+const integrationRoutes = require('./routes/integrationRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,6 +30,9 @@ app.use('/auth', authRoutes);
 app.use('/achievements', achievementRoutes);
 app.use('/history', historyRoutes);
 app.use('/analytics', analyticsRoutes);
+app.use('/social', socialRoutes);
+app.use('/integrations', integrationRoutes);
+app.use('/notifications', notificationRoutes);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

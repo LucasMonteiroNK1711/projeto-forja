@@ -23,9 +23,9 @@
 - [x] Insights automáticos (dia/horário de melhor performance)
 - [x] Meta vs realizado por área da vida
 
-## Fase 4 — Diferenciais
+## Fase 4 — Diferenciais ✅
 
-- [ ] Sistema social (ranking entre amigos)
-- [ ] Clãs / guildas
-- [ ] API com integrações externas (Notion/Google Calendar)
-- [ ] Push notifications
+- [x] Sistema social (ranking entre amigos)
+- [x] Clãs / guildas
+- [x] API com integrações externas (Notion/Google Calendar)
+- [x] Push notifications (agendamento inicial)

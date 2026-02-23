@@ -75,3 +75,47 @@ CREATE TABLE IF NOT EXISTS user_achievements (
   CONSTRAINT fk_user_achievements_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   CONSTRAINT fk_user_achievements_achievement FOREIGN KEY (achievement_id) REFERENCES achievements(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS clans (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(120) NOT NULL UNIQUE,
+  description TEXT,
+  owner_user_id INT NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_clans_owner FOREIGN KEY (owner_user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS clan_members (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  clan_id INT NOT NULL,
+  user_id INT NOT NULL,
+  role ENUM('owner', 'member') NOT NULL DEFAULT 'member',
+  joined_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY unique_clan_member (clan_id, user_id),
+  CONSTRAINT fk_clan_members_clan FOREIGN KEY (clan_id) REFERENCES clans(id) ON DELETE CASCADE,
+  CONSTRAINT fk_clan_members_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS integrations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  provider ENUM('notion', 'google_calendar') NOT NULL,
+  status ENUM('connected', 'disconnected', 'error') NOT NULL DEFAULT 'connected',
+  token_placeholder VARCHAR(255),
+  last_sync_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_integrations_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  title VARCHAR(180) NOT NULL,
+  body TEXT,
+  channel ENUM('push', 'email') NOT NULL DEFAULT 'push',
+  scheduled_for DATETIME NULL,
+  sent_at DATETIME NULL,
+  status ENUM('scheduled', 'sent', 'failed') NOT NULL DEFAULT 'scheduled',
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_notifications_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
