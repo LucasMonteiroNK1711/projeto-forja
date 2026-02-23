@@ -5,6 +5,9 @@ require('dotenv').config();
 const userRoutes = require('./routes/userRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
+const authRoutes = require('./routes/authRoutes');
+const achievementRoutes = require('./routes/achievementRoutes');
+const historyRoutes = require('./routes/historyRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,6 +22,9 @@ app.get('/health', (_req, res) => {
 app.use('/users', userRoutes);
 app.use('/tasks', taskRoutes);
 app.use('/dashboard', dashboardRoutes);
+app.use('/auth', authRoutes);
+app.use('/achievements', achievementRoutes);
+app.use('/history', historyRoutes);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

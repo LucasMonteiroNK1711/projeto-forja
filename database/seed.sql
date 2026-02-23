@@ -1,7 +1,7 @@
 USE projeto_forja;
 
 INSERT INTO users (name, email, password_hash, total_xp, streak_days)
-VALUES ('Usuário Demo', 'demo@forja.app', '$2b$10$placeholder', 180, 4)
+VALUES ('Usuário Demo', 'demo@forja.app', 'demo123', 180, 4)
 ON DUPLICATE KEY UPDATE name = VALUES(name);
 
 INSERT INTO attributes (user_id, code, points)

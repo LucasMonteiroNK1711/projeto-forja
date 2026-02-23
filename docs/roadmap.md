@@ -1,19 +1,20 @@
 # Roadmap Projeto Forja
 
-## Fase 1 — Base funcional
+## Fase 1 — Base funcional ✅
 
 - [x] Modelagem MySQL (usuários, tarefas, logs, XP, conquistas)
 - [x] Endpoints REST iniciais (`/users`, `/tasks`, `/dashboard`)
 - [x] Fórmula de XP e cálculo de nível
 - [x] KPI inicial de disciplina/produtividade
 
-## Fase 2 — Frontend React
+## Fase 2 — Frontend React ✅
 
-- [ ] Autenticação e sessão
-- [ ] Dashboard principal com cards de métricas
-- [ ] Tela de tarefas por tipo (diária, semanal, longa)
-- [ ] Tela de histórico e evolução
-- [ ] Tela de conquistas
+- [x] Autenticação e sessão local
+- [x] Dashboard principal com cards de métricas
+- [x] Tela de tarefas por tipo (diária, semanal, longa)
+- [x] Tela de histórico e evolução
+- [x] Tela de conquistas
+- [x] Tela de configurações base
 
 ## Fase 3 — Inteligência e análises
 

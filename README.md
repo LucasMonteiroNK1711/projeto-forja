@@ -1,30 +1,30 @@
-# Projeto Forja — Starter de Aplicação de Gamificação da Vida
+# Projeto Forja — App de Gamificação da Vida
 
-Este repositório traz uma **base inicial backend + modelagem de dados + regras de gamificação** para você evoluir uma aplicação estilo "Projeto Forja".
+Base completa em evolução para um sistema tipo RPG da vida com dashboard e acompanhamento de hábitos.
 
 ## Stack
 
-- **Backend:** Node.js + Express
-- **Banco:** MySQL 8+
-- **Arquitetura:** REST API + camadas (`routes`, `controllers`, `services`)
+- Backend: Node.js + Express + MySQL
+- Frontend: React + Vite
 
-## Funcionalidades contempladas nesta base
+## Status atual
 
-- Sistema de níveis e XP (progressão não linear)
-- Atributos da vida (força, inteligência, finanças, mentalidade, social, disciplina)
-- Tarefas diárias, semanais e de longo prazo
-- Registro de conclusão de tarefas (logs)
-- Histórico de XP
-- Estrutura para conquistas
-- Endpoints de dashboard com métricas principais
+### Fase 1 (concluída)
 
-## Fórmula de XP por nível
+- Modelagem MySQL (usuários, atributos, tarefas, logs, XP, conquistas)
+- API base de usuários, tarefas e dashboard
+- Regras de XP/nível e métricas iniciais
 
-```txt
-XP necessário = 100 * (nível ^ 1.5)
-```
+### Fase 2 (concluída nesta entrega)
 
-## Estrutura do projeto
+- Login (sessão local no frontend)
+- Dashboard com KPIs + barra de progresso + gráfico simplificado de XP
+- Página de tarefas (diária/semanal/longa) com ação de conclusão
+- Página de histórico (XP + conclusões)
+- Página de conquistas
+- Página de configurações (placeholder funcional)
+
+## Estrutura
 
 ```txt
 .
@@ -32,19 +32,20 @@ XP necessário = 100 * (nível ^ 1.5)
 │   ├── package.json
 │   └── src/
 │       ├── config/
-│       │   └── db.js
 │       ├── controllers/
-│       │   ├── dashboardController.js
-│       │   ├── taskController.js
-│       │   └── userController.js
 │       ├── routes/
-│       │   ├── dashboardRoutes.js
-│       │   ├── taskRoutes.js
-│       │   └── userRoutes.js
 │       ├── services/
-│       │   ├── metricsService.js
-│       │   └── xpService.js
 │       └── server.js
+├── frontend/
+│   ├── package.json
+│   ├── index.html
+│   └── src/
+│       ├── components/
+│       ├── pages/
+│       ├── services/
+│       ├── styles/
+│       ├── App.jsx
+│       └── main.jsx
 ├── database/
 │   ├── schema.sql
 │   └── seed.sql
@@ -52,43 +53,52 @@ XP necessário = 100 * (nível ^ 1.5)
     └── roadmap.md
 ```
 
-## Como rodar
+## Execução local
 
-1. Instale dependências:
-
-```bash
-cd backend
-npm install
-```
-
-2. Configure variáveis de ambiente (`.env`):
-
-```env
-PORT=3000
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=senha
-DB_NAME=projeto_forja
-```
-
-3. Crie banco e tabelas:
+### 1) Banco
 
 ```bash
 mysql -u root -p < database/schema.sql
 mysql -u root -p < database/seed.sql
 ```
 
-4. Execute:
+### 2) Backend
 
 ```bash
+cd backend
+npm install
 npm run dev
 ```
 
-## Próximos passos sugeridos
+API em `http://localhost:3000`.
 
-- Adicionar autenticação (JWT)
-- Implementar frontend React (Dashboard + Tarefas + Conquistas)
-- Criar gráficos (linha, barra, radar, heatmap)
-- Implementar engine de conquistas automática
-- Notificações e rotina de reset diário de tarefas
+### 3) Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+App em `http://localhost:5173`.
+
+## Usuário demo
+
+- Email: `demo@forja.app`
+- Senha: `demo123`
+
+## Endpoints principais
+
+- `POST /auth/login`
+- `GET /dashboard/:userId`
+- `GET /tasks?userId=1&type=daily`
+- `POST /tasks/:id/complete`
+- `GET /history/:userId`
+- `GET /achievements?userId=1`
+
+## Próxima etapa (Fase 3)
+
+- Heatmap de consistência
+- Radar de atributos
+- Insights automáticos de performance
+- Meta vs realizado por área da vida
