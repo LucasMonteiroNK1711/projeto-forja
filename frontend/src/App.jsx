@@ -27,9 +27,10 @@ export default function App() {
   const [clans, setClans] = useState([]);
   const [integrations, setIntegrations] = useState([]);
   const [notifications, setNotifications] = useState([]);
+  const [appError, setAppError] = useState('');
 
   async function loadData(userId) {
-    const [dashboardData, taskData, historyData, achievementData, analyticsData, rankingData, clansData, integrationsData, notificationsData] = await Promise.all([
+    const results = await Promise.allSettled([
       api.getDashboard(userId),
       api.getTasks(userId),
       api.getHistory(userId),
@@ -40,21 +41,31 @@ export default function App() {
       api.getIntegrations(userId),
       api.getNotifications(userId)
     ]);
-    setDashboard(dashboardData);
-    setTasks(taskData);
-    setHistory(historyData);
-    setAchievements(achievementData);
-    setAnalytics(analyticsData);
-    setRanking(rankingData.ranking || []);
-    setClans(clansData.clans || []);
-    setIntegrations(integrationsData.integrations || []);
-    setNotifications(notificationsData.notifications || []);
+
+    const getValue = (idx, fallback) => (results[idx].status === 'fulfilled' ? results[idx].value : fallback);
+
+    setDashboard(getValue(0, null));
+    setTasks(getValue(1, []));
+    setHistory(getValue(2, null));
+    setAchievements(getValue(3, []));
+    setAnalytics(getValue(4, null));
+    setRanking(getValue(5, { ranking: [] }).ranking || []);
+    setClans(getValue(6, { clans: [] }).clans || []);
+    setIntegrations(getValue(7, { integrations: [] }).integrations || []);
+    setNotifications(getValue(8, { notifications: [] }).notifications || []);
+
+    const failedCount = results.filter((item) => item.status === 'rejected').length;
+    if (failedCount > 0) {
+      setAppError(`Alguns dados não puderam ser carregados (${failedCount} falhas). Verifique se seu banco está atualizado com o schema mais recente.`);
+    } else {
+      setAppError('');
+    }
   }
 
   useEffect(() => {
     if (session?.user?.id) {
-      loadData(session.user.id).catch(() => {
-        setSession(null);
+      loadData(session.user.id).catch((error) => {
+        setAppError(error.message || 'Erro ao carregar dados da sessão.');
       });
     }
   }, [session?.user?.id]);
@@ -62,6 +73,7 @@ export default function App() {
   async function handleLogin(email, password) {
     const data = await api.login(email, password);
     setSession(data);
+    setAppError('');
     localStorage.setItem('forja_session', JSON.stringify(data));
   }
 
@@ -76,6 +88,7 @@ export default function App() {
     setClans([]);
     setIntegrations([]);
     setNotifications([]);
+    setAppError('');
     localStorage.removeItem('forja_session');
   }
 
@@ -128,6 +141,7 @@ export default function App() {
       onNavigate={setPage}
       onLogout={handleLogout}
     >
+      {appError ? <div className="card error-banner">{appError}</div> : null}
       {renderPage()}
     </Layout>
   );

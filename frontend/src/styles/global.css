@@ -157,3 +157,9 @@ input {
 .clan-card {
   margin-top: 10px;
 }
+
+.error-banner {
+  border-color: #8f4e4e;
+  background: #2f1b1b;
+  color: #ffd4d4;
+}
