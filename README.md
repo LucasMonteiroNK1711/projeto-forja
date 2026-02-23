@@ -136,3 +136,30 @@ App em `http://localhost:5173`.
 - Worker separado para notificações e retries
 - Regras automáticas de badges e missões sazonais
 - Modo multiplayer em tempo real
+
+
+## Deploy público
+
+Opção rápida com Docker Compose (frontend+backend+mysql):
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+Depois acesse:
+
+- `http://SEU_IP_PUBLICO`
+- `http://SEU_IP_PUBLICO/api/health`
+
+Guia completo em `docs/deploy-publico.md`.
+
+
+## Deploy gratuito (Vercel + Render + TiDB)
+
+Se você quer publicar **sem custo inicial**, use este stack:
+
+- Frontend: Vercel (free)
+- Backend: Render (free)
+- Banco MySQL-compatible: TiDB Cloud Serverless (free)
+
+Passo a passo completo: `docs/deploy-gratuito.md`.

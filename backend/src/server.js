@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const pool = require('./config/db');
 require('dotenv').config();
 
 const userRoutes = require('./routes/userRoutes');
@@ -18,11 +19,28 @@ const queueRoutes = require('./routes/queueRoutes');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+const allowedOrigins = (process.env.CORS_ORIGINS || '').split(',').map((item) => item.trim()).filter(Boolean);
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Origem não permitida por CORS.'));
+  }
+}));
 app.use(express.json());
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', service: 'projeto-forja-backend' });
+});
+
+app.get('/ready', async (_req, res) => {
+  try {
+    await pool.query('SELECT 1');
+    return res.json({ status: 'ready' });
+  } catch (error) {
+    return res.status(500).json({ status: 'not_ready', error: error.message });
+  }
 });
 
 app.use('/users', userRoutes);
